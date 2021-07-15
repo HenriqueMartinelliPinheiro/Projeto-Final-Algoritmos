@@ -6,7 +6,6 @@
 typedef struct{
   float posX;
   float posY;
-  char dentro;
 } Pontos;
 
 //proto
@@ -72,6 +71,7 @@ void desalocarMemoria(Pontos** pontos,int tam){
 //entrada de Dados
 void carregarVetorPontos(Pontos **pontos,float r,int tam){
   int i;
+  srand(time(NULL));
   for(i=0;i<tam;i++){
     pontos[i] = carregarPontos(r);
   }
@@ -113,10 +113,6 @@ int verificarDentro(Pontos** pontos,int r,int tam){
   for(i=0;i<tam;i++){
     if(sqrt(pow(pontos[i]->posX,2)  + pow(pontos[i]->posY,2)) <= r){
       contDentro++;
-      pontos[i]->dentro = 's';
-    }
-    else{
-      pontos[i]->dentro = 'n';
     }
   }
   return contDentro;
@@ -124,9 +120,8 @@ int verificarDentro(Pontos** pontos,int r,int tam){
 
 float calcularPI(int contDentro,int tam){
   float pi=0;
-  float dentro;
-  dentro = contDentro;
-  pi = 4 * dentro/tam;
+  pi = 4.0 * (float)contDentro/tam;
+  printf("ContDentro: %i",contDentro);
   return pi;
 }
 
@@ -135,7 +130,6 @@ void imprimirPontos(Pontos *pontos,int i){
 
     printf("\n\nA posicao X do ponto %i é %f\n",i+1,pontos->posX);
     printf("A posicao Y do ponto %i é %f\n",i+1,pontos->posY);
-    printf("O ponto %i está dentro(s-sim,n-nao): %c\n",i+1,pontos->dentro);
 }
 
 void imprimirVetorPontos(Pontos** pontos,int tam){
@@ -152,7 +146,7 @@ void imprimirPI(float pi){
 //tratamento de Erros
 
 void erros(int erro){
-  printf("Sistema retornou com o erro %i!\n", erro);
+  printf("Erro no Sistema!!! Erro %i!\n", erro);
 }
 
 void verificarErros(Pontos** pontos){
@@ -160,4 +154,3 @@ void verificarErros(Pontos** pontos){
     erros(-1);
   }
 }
-
